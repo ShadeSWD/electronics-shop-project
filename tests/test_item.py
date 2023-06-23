@@ -17,7 +17,7 @@ def item2():
 def test_item_init(item1, item2):
     assert item1.price == 10000
     assert item1.quantity == 20
-    assert item2.name == "Ноутбук"
+    assert item2.__name == "Ноутбук"
     assert len(item1.all) == 2
 
 
