@@ -14,6 +14,14 @@ def item2():
     return item2
 
 
+def test_item_repr(item1):
+    assert repr(item1) == "Item('Смартфон', 10000, 20)"
+
+
+def test_item_str(item1):
+    assert str(item1) == 'Смартфон'
+
+
 def test_item_init(item1, item2):
     assert item1.price == 10000
     assert item1.quantity == 20
