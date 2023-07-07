@@ -14,19 +14,19 @@ def item2():
     return item2
 
 
+def test_item_init(item1, item2):
+    assert item1.price == 10000
+    assert item1.quantity == 20
+    assert item2.name == "Ноутбук"
+    assert len(item1.all) == 2
+
+
 def test_item_repr(item1):
     assert repr(item1) == "Item('Смартфон', 10000, 20)"
 
 
 def test_item_str(item1):
     assert str(item1) == 'Смартфон'
-
-
-def test_item_init(item1, item2):
-    assert item1.price == 10000
-    assert item1.quantity == 20
-    assert item2.name == "Ноутбук"
-    assert len(item1.all) == 2
 
 
 def test_item_calculate_total_price(item1):
@@ -58,3 +58,7 @@ def test_item_string_to_number():
     assert Item.string_to_number('5') == 5
     assert Item.string_to_number('5.0') == 5
     assert Item.string_to_number('5.5') == 5
+
+
+def test_item_add(item1, item2):
+    assert item1 + item2 == 25
