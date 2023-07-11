@@ -1,4 +1,7 @@
 import csv
+import os
+
+ITEMS_CSV_PATH = '../src/items.csv'
 
 
 class Item:
@@ -47,14 +50,25 @@ class Item:
         self.__name = name[:10]
 
     @classmethod
-    def instantiate_from_csv(cls):
+    def instantiate_from_csv(cls, path=ITEMS_CSV_PATH):
         """
                 Создание экземпляров класса item из csv.
         """
-        with open('../src/items.csv') as csv_file:
-            reader = csv.DictReader(csv_file)
-            for row in reader:
-                cls(name=row['name'], price=row['price'], quantity=row['quantity'])
+        try:
+            if not os.path.exists(path):
+                raise FileNotFoundError(f"Отсутствует файл {path.split('/')[-1]}")
+
+            with open(path) as csv_file:
+                reader = csv.DictReader(csv_file)
+                for row in reader:
+                    if set(row) != {'name', 'price', 'quantity'}:
+                        raise InstantiateCSVError(path)
+                    cls(name=row['name'], price=row['price'], quantity=row['quantity'])
+        except FileNotFoundError:
+            raise
+        except InstantiateCSVError:
+            raise
+
 
     @staticmethod
     def string_to_number(str_number: str) -> int:
@@ -80,3 +94,12 @@ class Item:
         Применяет установленную скидку для конкретного товара.
         """
         self.price *= self.pay_rate
+
+
+class InstantiateCSVError(Exception):
+    """
+    Исключение, выбрасываемое при ошибке чтения CSV-файла.
+    """
+
+    def __init__(self, path: str):
+        super().__init__(f"Файл {path.split('/')[-1]} поврежден")
