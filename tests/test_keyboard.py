@@ -26,8 +26,3 @@ def test_keyboard_change_language(keyboard1):
 
     keyboard1.change_lang().change_lang()
     assert str(keyboard1.language) == "RU"
-
-
-def test_phone_add(phone1, item1):
-    assert item1 + phone1 == 25
-    assert phone1 + phone1 == 10
